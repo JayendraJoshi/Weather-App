@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeaterApp</title>
+    <title>WeatherApp</title>
 </head>
 <body>
     <header>
         <div class="searchElements">
             <input></input>
-            <button>Search</button>
+            <button class=search>Search</button>
         </div>
+        <button class="change-unit">Change Unit</button>
     </header>
     <main>
-        <div class="name-container">
-            <h1 class="name"></h1>
-        </div>
-        <div class="temperature-container">
-            <h2 class="real-temperature"></h2>
-            <h3 class="feels-like"></h3>
-        </div>
-        <div class="additional-info-container">
-            <p class="date-time"></p>
-            <p class="cloudcover"></p>
-            <p class="conditions"></p>
-            <p class="wind-speed"></p>
+        <div class="weather-display">
+            <div class="name-container">
+                <h1 class="name"></h1>
+            </div>
+            <div class="temperature-container">
+                
+                <h2 class="real-temperature"></h2>
+                 <span class="temperature-unit">F</span>
+            </div>
+            <div class="additional-info-container">
+                <p class="feels-like"></p>
+                <p class="temp-max"></p>
+                <p class="temp-min"></p>
+                <p class="conditions"></p>
+                <p class="wind-speed"></p>
+                <p class="humidity"></p>
+                <p class="timezone"></p>
+                <p class="sunrise"></p>
+                <p class="sunset"></p>
+            </div>
         </div>
     </main>
     
