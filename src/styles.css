@@ -30,16 +30,22 @@ main{
 .name-container{
     grid-column: 1/4;
     height: 100%;
-    font-size: 4rem;
+    font-size: 1rem;
     border:1px solid black;
 }
-.name{
-    height:100%;
+.real-temperature {
+    display: flex;
+}
+.temperature-unit{
+    font-size: 20px;
 }
 .additional-info-container{
     grid-column: 3;
     grid-row: 2;
     border:1px solid black;
+}
+.feels-like,.temp-max,.temp-min{
+    display: flex;
 }
 .temperature-container{
     display: flex;
@@ -49,10 +55,6 @@ main{
 }
 .real-temperature{
     font-size:15rem;
-}
-.temperature-unit{
-    margin-left: auto;
-    font-size: 3rem;
 }
 .feels-like{
     font-size:2rem;
