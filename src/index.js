@@ -1,12 +1,5 @@
 import "./styles.css";
 
-import cloudyNight from './assets/backgrounds/cloudy-sky-nighttime.jpg';
-import clearNight from './assets/backgrounds/clear-sky-nighttime.jpg';
-import cloudyDay from './assets/backgrounds/cloudy-sky-daytime.jpg';
-import rainyCloudyDay from './assets/backgrounds/rainy-cloudy-sky-daytime.jpg';
-import clearDay from './assets/backgrounds/clear-sky-daytime.jpg';
-
-
 function HandleData(){
     let currentUnit = 'F';
     let currentDataObjectInFahrenheit;
@@ -84,7 +77,7 @@ function HandleDom(){
     const input = document.querySelector("input");
     function displayDataOnDomInImperial(specificData, dataHandler){
         const locationNameH1 = document.querySelector(".name");
-        locationNameH1.textContent=specificData.address;
+        locationNameH1.textContent=specificData.address[0].toUpperCase()+ specificData.address.slice(1);
         const descriptionH3 = document.querySelector(".description");
         descriptionH3.textContent = specificData.description;
         const realTempH2 = document.querySelector(".real-temperature h2");
@@ -143,32 +136,8 @@ function HandleDom(){
             tempUnitSpan.forEach(span => span.textContent = "℃");
         }
     }
-    function setBackground(specificData){
-        const conditions = specificData.conditions;
-        const datetime = specificData.datetime;
-        const sunrise = specificData.sunrise;
-        const sunset  = specificData.sunset;
-        const body = document.querySelector("body");
-        let imageUrl;
-        let formattedConditions = conditions.toLowerCase();
-        if(datetime < sunrise || datetime > sunset){
-            if(formattedConditions.includes("cloudy")||formattedConditions.includes("rain")){
-                imageUrl = cloudyNight;
-            }else{
-                imageUrl = clearNight;
-            }
-        }else{
-            if(formattedConditions.includes("cloudy") && !formattedConditions.includes("rain")){
-                imageUrl = cloudyDay;
-            }else if(formattedConditions.includes("cloudy") && formattedConditions.includes("rain")){
-                imageUrl = rainyCloudyDay;
-            }else{
-                imageUrl = clearDay;
-            }
-        }
-        body.style.backgroundImage = `url('${imageUrl}')`;
-    }
-    return {displayDataOnDomInImperial,displayDataOnDomInMetric,resetInputValue, getInputValue,setInputValue,updateUnitDisplay,setBackground};
+    
+    return {displayDataOnDomInImperial,displayDataOnDomInMetric,resetInputValue, getInputValue,setInputValue,updateUnitDisplay};
 }
 function HandleEvents(){
     const domHandler = new HandleDom();
@@ -180,7 +149,6 @@ function HandleEvents(){
             return dataHandler.getSpecificDataFromResponse(response)
           }).then(function(specificData){
              domHandler.displayDataOnDomInImperial(specificData,dataHandler);
-             domHandler.setBackground(specificData);
              domHandler.updateUnitDisplay('F');
           })
           domHandler.resetInputValue();
