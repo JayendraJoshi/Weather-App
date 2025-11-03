@@ -1,5 +1,11 @@
 import "./styles.css";
 
+import cloudyNight from './assets/backgrounds/cloudy-sky-nighttime.jpg';
+import clearNight from './assets/backgrounds/clear-sky-nighttime.jpg';
+import cloudyDay from './assets/backgrounds/cloudy-sky-daytime.jpg';
+import rainyCloudyDay from './assets/backgrounds/rainy-cloudy-sky-daytime.jpg';
+import clearDay from './assets/backgrounds/clear-sky-daytime.jpg';
+
 
 function HandleData(){
     let currentUnit = 'F';
@@ -32,12 +38,14 @@ function getSpecificDataFromResponse(response){
             tempmin: data.days[0].tempmin,
             tempmax: data.days[0].tempmax,
             feelslike: data.currentConditions.feelslike,
-            conditions: data.currentConditions.conditions,
+            conditions: data.days[0].conditions,
             windspeed: data.currentConditions.windspeed,
             humidity: data.currentConditions.humidity,
             timezone: data.timezone,
             sunset: data.currentConditions.sunset,
             sunrise: data.currentConditions.sunrise,
+            description: data.days[0].description,
+            datetime: data.currentConditions.datetime,
         };
         currentDataObjectInFahrenheit = dataObject;
         return dataObject;
@@ -129,7 +137,32 @@ function HandleDom(){
         const tempUnitSpan = document.querySelector(".temperature-unit");
         tempUnitSpan.textContent=unit;
     }
-    return {displayDataOnDom,resetInputValue, getInputValue,setInputValue,updateUnitDisplay};
+    function setBackground(specificData){
+        const conditions = specificData.conditions;
+        const datetime = specificData.datetime;
+        const sunrise = specificData.sunrise;
+        const sunset  = specificData.sunset;
+        const body = document.querySelector("body");
+        let imageUrl;
+        let formattedConditions = conditions.toLowerCase();
+        if(datetime < sunrise || datetime > sunset){
+            if(formattedConditions.includes("cloudy")||formattedConditions.includes("rain")){
+                imageUrl = cloudyNight;
+            }else{
+                imageUrl = clearNight;
+            }
+        }else{
+            if(formattedConditions.includes("cloudy") && !formattedConditions.includes("rain")){
+                imageUrl = cloudyDay;
+            }else if(formattedConditions.includes("cloudy") && formattedConditions.includes("rain")){
+                imageUrl = rainyCloudyDay;
+            }else{
+                imageUrl = clearDay;
+            }
+        }
+        body.style.backgroundImage = `url('${imageUrl}')`;
+    }
+    return {displayDataOnDom,resetInputValue, getInputValue,setInputValue,updateUnitDisplay,setBackground};
 }
 function HandleEvents(){
     const domHandler = new HandleDom();
@@ -141,6 +174,7 @@ function HandleEvents(){
             return dataHandler.getSpecificDataFromResponse(response)
           }).then(function(specificData){
              domHandler.displayDataOnDom(specificData);
+             domHandler.setBackground(specificData);
           })
           domHandler.resetInputValue();
         })
