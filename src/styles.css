@@ -18,9 +18,10 @@ body{
 header{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:space-between;
     flex-basis: 10vh;
     flex-grow: 0;
+    width: clamp(550px, 50vw, 650px);
 }
 main{
   display:flex;
@@ -41,6 +42,7 @@ main{
     column-gap:2rem;
     width:clamp(550px,50vw,650px);
     height:450px;
+    animation: dropIn 1.5s ease;
 }
 .name-container{
     height: 100%;
@@ -105,6 +107,43 @@ main{
 .wind-speed {
     font-variant-numeric: tabular-nums; 
 }
+.searchElements{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+}
+.searchElements input{
+    outline: none;
+    border: none; 
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.4);
+    height:1.8rem;
+    width: clamp(12rem,5vw,15rem);
+    color:white;
+}
+button{
+    padding: 0.5rem 1rem;
+     border-radius: 8px;
+     border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+}
+button:hover{
+    background-color: rgba(0, 0, 0, 0.7);
+}
+@keyframes dropIn {
+  0% { 
+    transform: translateY(-20%); 
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
 @media (max-width: 650px) {
     .weather-display{
         grid-template-columns: minmax(300px,1fr);
@@ -123,6 +162,10 @@ main{
     .temperature{
         gap:2rem;
        
+    }
+    header{
+        width: clamp(400px, 65vw, 550px);
+
     }
    
 }

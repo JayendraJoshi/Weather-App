@@ -17,15 +17,17 @@ function HandleData(){
         const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&include=days,current,alerts,events&key=3ZSBAJWVFDWUTUYMPVB3LUDP2&contentType=json`;
         const request = new Request(url);
         return fetch(request).then(function(response){
+            if (!response.ok) { 
+                alert("Invalid location or API error");
+                throw new Error("Invalid location or API error");
+            }
             return response;
         }).catch(function(error){
-            console.log("something went wrong: " + error)
+            throw error;
         })
     }
     function getSpecificDataFromResponse(response){
         return response.json().then(function(data){
-            console.log(data);
-
             const dataObject = {
                 address: data.address,
                 temp: data.currentConditions.temp,
@@ -43,6 +45,9 @@ function HandleData(){
             };
             currentDataObjectInFahrenheit = dataObject;
             return dataObject;
+        }).catch(function(error){
+            console.log("Data parsing error:",error)
+            throw error;
         })
     }
     function getCurrentDataObject(){
@@ -77,7 +82,7 @@ function HandleDom(){
     const input = document.querySelector("input");
     function displayDataOnDomInImperial(specificData, dataHandler){
         const locationNameH1 = document.querySelector(".name");
-        locationNameH1.textContent=specificData.address[0].toUpperCase()+ specificData.address.slice(1);
+        locationNameH1.textContent=formatAddress(specificData.address);
         const descriptionH3 = document.querySelector(".description");
         descriptionH3.textContent = specificData.description;
         const realTempH2 = document.querySelector(".real-temperature h2");
@@ -119,6 +124,13 @@ function HandleDom(){
         const sunsetP = document.querySelector(".sunset");
         sunsetP.textContent = "Sunset: " + specificData.sunset;
     }
+    function formatAddress(address){
+        let parts = address.split(" ");
+        for(let i=0;i<parts.length;i++){
+            parts[i] = parts[i][0].toUpperCase()+parts[i].slice(1);
+        }
+        return parts.join(" ");
+    }
     function resetInputValue(){
         input.value="";
     }
@@ -145,11 +157,17 @@ function HandleEvents(){
         function addEventListeners(){
         const button = document.querySelector(".search");
         button.addEventListener("click", function(){
+            if(!domHandler.getInputValue()){
+                alert("Please enter a valid city name");
+                return;
+            }
           dataHandler.getResponse(domHandler.getInputValue()).then(function(response){
             return dataHandler.getSpecificDataFromResponse(response)
           }).then(function(specificData){
              domHandler.displayDataOnDomInImperial(specificData,dataHandler);
              domHandler.updateUnitDisplay('F');
+          }).catch(function(error){
+                 console.log(error);
           })
           domHandler.resetInputValue();
         })
