@@ -182,7 +182,7 @@ function HandleEvents() {
     const button = document.querySelector(".search");
     button.addEventListener("click", function () {
       if (!domHandler.getInputValue()) {
-        alert("Please enter a valid city name");
+        alert("Please enter a city name");
         return;
       }
       dataHandler
@@ -213,6 +213,15 @@ function HandleEvents() {
         domHandler.updateUnitDisplay("F");
       }
     });
+    const input = document.querySelector("input");
+    input.addEventListener("keydown",function(event){
+        if(event.key==="Enter"){
+            button.click();        
+        }
+    })
+    
+
+
   }
   return { addEventListeners };
 }
