@@ -8,7 +8,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap:1rem;
+  gap: 1rem;
   align-items: center;
   background-color: #1a1a2e;
   background-image: url("./assets/images/sky.jpg");
@@ -124,7 +124,7 @@ main {
   height: 1.8rem;
   width: clamp(12rem, 5vw, 15rem);
   color: white;
-  padding:4px 8px;
+  padding: 4px 8px;
 }
 button {
   padding: 0.5rem 1rem;
@@ -138,20 +138,20 @@ button {
 button:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
-footer{
-    flex-basis: 5vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    align-self: stretch;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+footer {
+  flex-basis: 5vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-self: stretch;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-footer div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: clamp(550px, 50vw, 650px);
+footer div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(550px, 50vw, 650px);
 }
 @keyframes dropIn {
   0% {
@@ -183,8 +183,7 @@ footer div{
   header {
     width: clamp(400px, 65vw, 550px);
   }
-  footer div{
+  footer div {
     width: clamp(400px, 65vw, 550px);
   }
 }
-

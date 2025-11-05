@@ -214,14 +214,11 @@ function HandleEvents() {
       }
     });
     const input = document.querySelector("input");
-    input.addEventListener("keydown",function(event){
-        if(event.key==="Enter"){
-            button.click();        
-        }
-    })
-    
-
-
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        button.click();
+      }
+    });
   }
   return { addEventListeners };
 }
